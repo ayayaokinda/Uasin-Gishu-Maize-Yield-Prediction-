@@ -32,142 +32,106 @@ st.set_page_config(
 
 st.markdown("""
 <style>
-    /* Main background */
-    .stApp { background-color: #f5f5f0; }
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap');
 
-    /* Sidebar */
+    /* ── GLOBAL ── */
+    .stApp { background-color: #1C0A00 !important; font-family: 'DM Sans', sans-serif !important; }
+
+    /* ── SIDEBAR ── */
     section[data-testid="stSidebar"] {
-        background-color: #1a3c2e;
+        background: linear-gradient(180deg, #0D0500 0%, #150800 100%) !important;
+        border-right: 1px solid rgba(212,168,83,0.15) !important;
     }
-    section[data-testid="stSidebar"] * {
-        color: #e8f5e9 !important;
-    }
-    section[data-testid="stSidebar"] .stSlider label {
-        color: #a5d6a7 !important;
-    }
+    section[data-testid="stSidebar"] * { color: rgba(255,255,255,0.85) !important; font-family: 'DM Sans', sans-serif !important; }
+    section[data-testid="stSidebar"] h1, section[data-testid="stSidebar"] h2, section[data-testid="stSidebar"] h3 { color: #D4A853 !important; }
+    section[data-testid="stSidebar"] .stSlider label { color: rgba(255,255,255,0.7) !important; font-size: 0.82rem !important; font-weight: 500 !important; }
 
-    /* Metric cards */
+    /* ── MAIN CONTENT ── */
+    .main .block-container { background-color: transparent !important; padding: 1.5rem 2rem !important; }
+
+    /* ── HEADINGS ── */
+    h1 { font-family: 'Playfair Display', Georgia, serif !important; color: #F0E0C0 !important; font-weight: 900 !important; }
+    h2 { font-family: 'Playfair Display', Georgia, serif !important; color: #D4A853 !important; font-weight: 700 !important; }
+    h3 { color: #D9C4A0 !important; font-weight: 600 !important; }
+
+    /* ── METRIC CARDS ── */
     div[data-testid="metric-container"] {
-        background-color: white;
-        border: 1px solid #e0e0e0;
-        border-radius: 8px;
-        padding: 16px;
-        box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+        background: linear-gradient(135deg, #2D1200, #1C0A00) !important;
+        border: 1px solid rgba(212,168,83,0.2) !important;
+        border-radius: 10px !important; padding: 18px !important;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.4) !important;
     }
+    div[data-testid="metric-container"] label { color: #A89070 !important; font-size: 0.72rem !important; text-transform: uppercase !important; letter-spacing: 1.2px !important; font-family: 'DM Mono', monospace !important; }
+    div[data-testid="metric-container"] [data-testid="metric-value"] { color: #D4A853 !important; font-family: 'Playfair Display', serif !important; font-size: 2rem !important; font-weight: 700 !important; }
+    div[data-testid="metric-container"] [data-testid="metric-delta"] { color: #A89070 !important; font-size: 0.75rem !important; }
 
-    /* Headers */
-    h1 { color: #1a3c2e !important; font-family: Georgia, serif !important; }
-    h2 { color: #1a3c2e !important; }
-    h3 { color: #2d6a4f !important; }
+    /* ── TABS ── */
+    .stTabs [data-baseweb="tab-list"] { background-color: #0D0500 !important; border-radius: 8px 8px 0 0 !important; padding: 4px 4px 0 !important; gap: 2px !important; border-bottom: 1px solid rgba(212,168,83,0.15) !important; }
+    .stTabs [data-baseweb="tab"] { background-color: transparent !important; color: rgba(255,255,255,0.45) !important; border-radius: 6px 6px 0 0 !important; font-weight: 600 !important; font-size: 0.82rem !important; padding: 10px 20px !important; font-family: 'DM Sans', sans-serif !important; }
+    .stTabs [aria-selected="true"] { background-color: #2D1200 !important; color: #D4A853 !important; border-top: 2px solid #D4A853 !important; }
+    .stTabs [data-baseweb="tab-panel"] { background-color: #1C0A00 !important; border: 1px solid rgba(212,168,83,0.1) !important; border-top: none !important; border-radius: 0 0 10px 10px !important; padding: 20px !important; }
 
-    /* Tab styling */
-    .stTabs [data-baseweb="tab-list"] {
-        gap: 4px;
-        background-color: white;
-        border-radius: 8px;
-        padding: 4px;
-    }
-    .stTabs [data-baseweb="tab"] {
-        background-color: transparent;
-        border-radius: 6px;
-        color: #555;
-        font-weight: 500;
-    }
-    .stTabs [aria-selected="true"] {
-        background-color: #2d6a4f !important;
-        color: white !important;
-    }
+    /* ── BUTTONS ── */
+    .stButton button { background: linear-gradient(135deg, #D4A853, #B8913A) !important; color: #0D0500 !important; font-weight: 700 !important; border: none !important; border-radius: 8px !important; font-family: 'DM Sans', sans-serif !important; }
 
-    /* Prediction result box */
+    /* ── SELECTBOX ── */
+    .stSelectbox [data-baseweb="select"] { background-color: #2D1200 !important; border-color: rgba(212,168,83,0.25) !important; border-radius: 8px !important; }
+    .stSelectbox label { color: #C8B89A !important; font-size: 0.82rem !important; }
+
+    /* ── DATAFRAME ── */
+    .stDataFrame { border: 1px solid rgba(212,168,83,0.15) !important; border-radius: 8px !important; }
+
+    /* ── DIVIDER ── */
+    hr { border-color: rgba(212,168,83,0.15) !important; margin: 1.5rem 0 !important; }
+
+    /* ── PREDICTION BOX ── */
     .prediction-box {
-        background: linear-gradient(135deg, #1a3c2e, #2d6a4f);
-        border-radius: 12px;
-        padding: 28px;
-        text-align: center;
-        color: white;
-        margin: 16px 0;
+        background: linear-gradient(160deg, #0D2118, #0A1A10);
+        border: 1px solid rgba(107,191,123,0.35); border-radius: 14px;
+        padding: 32px; text-align: center; margin: 8px 0 16px;
     }
-    .prediction-box h1 {
-        color: white !important;
-        font-size: 3.2rem !important;
-        margin: 0;
-    }
-    .prediction-box p {
-        color: #a5d6a7;
-        margin: 4px 0 0 0;
-        font-size: 1rem;
-    }
+    .prediction-box h1 { color: white !important; font-size: 4rem !important; margin: 0 !important; line-height: 1 !important; }
+    .prediction-box p { color: #a5d6a7; margin: 4px 0 0; font-size: 1rem; }
 
-    /* Info box */
-    .info-box {
-        background-color: #e8f5e9;
-        border-left: 4px solid #2d6a4f;
-        border-radius: 4px;
-        padding: 12px 16px;
-        margin: 8px 0;
-        font-size: 0.9rem;
-        color: #1a3c2e;
-    }
+    /* ── INFO / WARN BOXES ── */
+    .info-box { background: rgba(74,124,89,0.12); border-left: 3px solid #4A7C59; border-radius: 0 8px 8px 0; padding: 12px 16px; margin: 8px 0; font-size: 0.85rem; color: #C8B89A; line-height: 1.65; }
+    .info-box b { color: #E8D5B0; }
+    .warn-box { background: rgba(212,168,83,0.08); border-left: 3px solid #D4A853; border-radius: 0 8px 8px 0; padding: 12px 16px; margin: 8px 0; font-size: 0.85rem; color: #C8B89A; line-height: 1.65; }
+    .warn-box b { color: #D4A853; }
 
-    /* Warning box */
-    .warn-box {
-        background-color: #fff8e1;
-        border-left: 4px solid #f9a825;
-        border-radius: 4px;
-        padding: 12px 16px;
-        margin: 8px 0;
-        font-size: 0.9rem;
-        color: #5d4037;
-    }
+    /* ── GAP CALLOUT ── */
+    .gap-callout { background: linear-gradient(135deg, #1a3a28, #0D1F14); border: 1px solid rgba(212,168,83,0.2); border-top: 3px solid #D4A853; border-radius: 0 0 12px 12px; padding: 22px 26px; margin: 0 0 20px; }
+    .gap-callout h4 { font-family: 'Playfair Display', serif; color: #D4A853 !important; font-size: 1rem !important; margin: 0 0 10px !important; }
+    .gap-callout p { font-size: 0.88rem; line-height: 1.7; color: #C8B89A; margin: 0; }
+    .gap-callout .gap-number { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 700; color: #D4A853; line-height: 1; }
+    .gap-callout .gap-number.green { color: #6BBF7B; }
 
-    /* Yield gap callout — NEW */
-    .gap-callout {
-        background: linear-gradient(135deg, #1a3c2e, #2d6a4f);
-        border-radius: 10px;
-        padding: 20px 24px;
-        margin: 12px 0 20px 0;
-        color: white;
-    }
-    .gap-callout h4 {
-        color: #95d5b2 !important;
-        margin: 0 0 8px 0;
-        font-size: 1rem;
-        font-family: Georgia, serif;
-        letter-spacing: 0.5px;
-    }
-    .gap-callout p {
-        color: #d8f3dc;
-        margin: 0;
-        font-size: 0.92rem;
-        line-height: 1.6;
-    }
-    .gap-callout .gap-number {
-        color: #52b788;
-        font-size: 2rem;
-        font-weight: bold;
-        font-family: Georgia, serif;
-    }
+    /* ── ONBOARD BOX ── */
+    .onboard-box { background: rgba(212,168,83,0.06); border: 1px solid rgba(212,168,83,0.18); border-radius: 10px; padding: 16px 20px; margin-bottom: 20px; font-size: 0.88rem; color: #C8B89A; line-height: 1.7; }
+    .onboard-box b { color: #D4A853; }
 
-    /* Onboarding banner — NEW */
-    .onboard-box {
-        background-color: #e8f5e9;
-        border: 1.5px solid #52b788;
-        border-radius: 10px;
-        padding: 16px 20px;
-        margin-bottom: 16px;
-        font-size: 0.93rem;
-        color: #1a3c2e;
-        line-height: 1.7;
-    }
-    .onboard-box b { color: #2d6a4f; }
+    /* ── SIDEBAR PREDICTION ── */
+    .sidebar-pred { background: rgba(107,191,123,0.07); border: 1px solid rgba(107,191,123,0.2); border-radius: 10px; padding: 16px; text-align: center; margin-top: 16px; }
+    .sidebar-pred .sp-label { font-family: 'DM Mono', monospace; font-size: 0.62rem; letter-spacing: 2.5px; text-transform: uppercase; color: rgba(107,191,123,0.65); margin-bottom: 6px; }
+    .sidebar-pred .sp-value { font-family: 'Playfair Display', serif; font-size: 2.4rem; font-weight: 900; color: white; line-height: 1; }
+    .pred-verdict { display: inline-block; padding: 6px 20px; border-radius: 20px; font-size: 0.82rem; font-weight: 700; margin-top: 4px; }
+    .pred-verdict.above { background: rgba(107,191,123,0.15); border: 1px solid rgba(107,191,123,0.35); color: #6BBF7B; }
+    .pred-verdict.below { background: rgba(224,82,82,0.12); border: 1px solid rgba(224,82,82,0.3); color: #E05252; }
+    .pred-verdict.average { background: rgba(212,168,83,0.12); border: 1px solid rgba(212,168,83,0.3); color: #D4A853; }
 
-    /* Slider hint text — NEW */
-    .slider-hint {
-        font-size: 0.78rem;
-        color: #a5d6a7;
-        margin: -8px 0 10px 0;
-        font-style: italic;
-    }
+    /* ── SLIDER HINTS ── */
+    .slider-hint { font-size: 0.72rem; color: rgba(212,168,83,0.55); margin: -6px 0 10px; font-style: italic; font-family: 'DM Mono', monospace; }
+
+    /* ── RELIABILITY TABLE ── */
+    .rel-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+    .rel-table th { background: #2D1200; color: #D4A853; padding: 8px 12px; text-align: left; font-family: 'DM Mono', monospace; font-size: 0.7rem; letter-spacing: 1px; text-transform: uppercase; border-bottom: 1px solid rgba(212,168,83,0.2); }
+    .rel-table td { padding: 8px 12px; border-bottom: 1px solid rgba(255,255,255,0.05); color: #C8B89A; vertical-align: top; }
+    .rel-table tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 4px; height: 4px; }
+    ::-webkit-scrollbar-track { background: #0D0500; }
+    ::-webkit-scrollbar-thumb { background: rgba(212,168,83,0.3); border-radius: 2px; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -208,13 +172,17 @@ COUNTY_MIN    = master['Yield_Tonnes_Ha'].min()
 SEED_POTENTIAL = 9.5   # midpoint of 9–11 t/ha
 
 PALETTE = {
-    'green':      '#2d6a4f',
-    'dark_green': '#1a3c2e',
-    'light_green':'#52b788',
-    'red':        '#e63946',
-    'orange':     '#f4a261',
-    'blue':       '#457b9d',
-    'grey':       '#6c757d',
+    'green':       '#6BBF7B',
+    'dark_green':  '#4A7C59',
+    'light_green': '#52b788',
+    'red':         '#E05252',
+    'orange':      '#E8944A',
+    'blue':        '#5B9BD5',
+    'grey':        'rgba(200,184,154,0.35)',
+    'gold':        '#D4A853',
+    'bg':          '#1C0A00',
+    'card':        '#2D1200',
+    'grid':        'rgba(255,255,255,0.04)',
 }
 
 # =============================================================================
@@ -457,8 +425,8 @@ with tab1:
             yaxis_title='Yield (tonnes per hectare)',
             xaxis=dict(tickmode='array', tickvals=master['Year'].tolist()),
             yaxis=dict(range=[0, 11.5]),
-            plot_bgcolor='white',
-            paper_bgcolor='white',
+            plot_bgcolor='#2D1200',
+            paper_bgcolor='#1C0A00',
             height=380,
             margin=dict(t=70, b=40),
             showlegend=False,
@@ -577,8 +545,8 @@ with tab2:
               'Dashed lines = strong predictor threshold (±0.5)</sup>',
         xaxis_title='Relationship strength (−1 to +1)',
         xaxis_range=[-1.05, 1.05],
-        plot_bgcolor='white',
-        paper_bgcolor='white',
+        plot_bgcolor='#2D1200',
+        paper_bgcolor='#1C0A00',
         height=520,
         margin=dict(t=70, l=250),
     )
@@ -627,8 +595,8 @@ with tab2:
             title=f'{selected} vs Yield — relationship strength: {r_val:+.3f}',
             xaxis_title=selected,
             yaxis_title='Yield (tonnes per hectare)',
-            plot_bgcolor='white',
-            paper_bgcolor='white',
+            plot_bgcolor='#2D1200',
+            paper_bgcolor='#1C0A00',
             height=380,
         )
         st.plotly_chart(fig_sc, use_container_width=True, config={"responsive": True})
@@ -763,7 +731,7 @@ with tab3:
         ))
         fig_gauge.update_layout(
             height=290,
-            paper_bgcolor='white',
+            paper_bgcolor='#1C0A00',
             margin=dict(t=50, b=10),
             annotations=[dict(
                 x=0.5, y=-0.08,
@@ -811,7 +779,7 @@ with tab3:
         fig_donut.update_layout(
             title=f'How your {rain_annual:.0f} mm of rain is distributed across seasons',
             height=290,
-            paper_bgcolor='white',
+            paper_bgcolor='#1C0A00',
             margin=dict(t=55, b=10),
             showlegend=False,
         )
@@ -892,8 +860,8 @@ with tab3:
         fig_sc_bar.update_layout(
             title='Scenario Comparison — which set of conditions produces the better harvest?',
             yaxis_title='Predicted Yield (tonnes per hectare)',
-            plot_bgcolor='white',
-            paper_bgcolor='white',
+            plot_bgcolor='#2D1200',
+            paper_bgcolor='#1C0A00',
             coloraxis_showscale=False,
             height=340,
         )
@@ -1011,8 +979,8 @@ with tab4:
                   'Shaded band = acceptable error range.</sup>',
             xaxis_title='Actual Yield (t/ha)',
             yaxis_title='What the Model Predicted (t/ha)',
-            plot_bgcolor='white',
-            paper_bgcolor='white',
+            plot_bgcolor='#2D1200',
+            paper_bgcolor='#1C0A00',
             height=400,
             xaxis=dict(range=[lo, hi]),
             yaxis=dict(range=[lo, hi]),
@@ -1056,8 +1024,8 @@ with tab4:
             xaxis_title='Year',
             yaxis_title='Prediction error (t/ha)',
             xaxis=dict(tickmode='array', tickvals=years.tolist()),
-            plot_bgcolor='white',
-            paper_bgcolor='white',
+            plot_bgcolor='#2D1200',
+            paper_bgcolor='#1C0A00',
             height=400,
         )
         st.plotly_chart(fig_res, use_container_width=True, config={"responsive": True})
@@ -1093,8 +1061,8 @@ with tab4:
             title='Which Variables Matter Most to the Model?<br>'
                   '<sup>Longer bar = removing this variable makes predictions less accurate</sup>',
             xaxis_title='How much accuracy is lost without this variable',
-            plot_bgcolor='white',
-            paper_bgcolor='white',
+            plot_bgcolor='#2D1200',
+            paper_bgcolor='#1C0A00',
             height=340,
             margin=dict(l=230),
         )
@@ -1172,9 +1140,21 @@ with tab4:
 
 st.markdown("---")
 st.markdown("""
-<div style="text-align:center; color:#888; font-size:0.85rem; padding:8px 0;">
-    Maize Yield Prediction — Uasin Gishu County, Kenya &nbsp;|&nbsp;
-    KCA Tech Expo · March 2026 &nbsp;|&nbsp;
-    Data: Ministry of Agriculture · NASA POWER · CIMMYT · Purdue University
+<div style="background:#150800;border:1px solid rgba(212,168,83,0.12);
+            border-radius:10px;padding:16px 24px 14px;margin-top:4px;text-align:center;">
+    <div style="font-family:'DM Mono',monospace;font-size:0.68rem;letter-spacing:0.5px;
+                color:#A89070;margin-bottom:10px;">
+        Maize Yield Prediction — Uasin Gishu County, Kenya &nbsp;·&nbsp;
+        KCA Tech Expo · March 2026 &nbsp;·&nbsp; IBM SkillsBuild Data Analytics Bootcamp
+    </div>
+    <div style="font-size:0.75rem;display:flex;justify-content:center;
+                flex-wrap:wrap;gap:6px 20px;font-family:'DM Sans',sans-serif;">
+        <span style="color:#7A6A55;">Data sources:</span>
+        <a href="https://www.kilimo.go.ke" target="_blank" style="color:#D4A853;text-decoration:none;border-bottom:1px dotted rgba(212,168,83,0.4);">📋 Ministry of Agriculture, Kenya</a>
+        <a href="https://power.larc.nasa.gov" target="_blank" style="color:#D4A853;text-decoration:none;border-bottom:1px dotted rgba(212,168,83,0.4);">🛰 NASA POWER</a>
+        <a href="https://www.cimmyt.org" target="_blank" style="color:#D4A853;text-decoration:none;border-bottom:1px dotted rgba(212,168,83,0.4);">🌽 CIMMYT</a>
+        <a href="https://www.purdue.edu" target="_blank" style="color:#D4A853;text-decoration:none;border-bottom:1px dotted rgba(212,168,83,0.4);">🔬 Purdue University</a>
+        <a href="https://www.isric.org/explore/soil-geographic-databases" target="_blank" style="color:#D4A853;text-decoration:none;border-bottom:1px dotted rgba(212,168,83,0.4);">🌱 ISRIC · KENSOTER v2.0</a>
+    </div>
 </div>
 """, unsafe_allow_html=True)

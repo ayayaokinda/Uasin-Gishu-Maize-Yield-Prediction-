@@ -989,8 +989,7 @@ with tab3:
                    'decreasing': {'color': P['red']}},
             gauge={
                 'axis': {'range': [2.0, 5.0], 'ticksuffix': ' t/ha',
-                         'tickfont': {'size': 10, 'color': P['text']},
-                         'linecolor': 'rgba(255,255,255,0.1)'},
+                         'tickfont': {'size': 10, 'color': P['text']}},
                 'bar': {'color': P['gold']},
                 'bgcolor': P['card'],
                 'bordercolor': 'rgba(255,255,255,0.05)',

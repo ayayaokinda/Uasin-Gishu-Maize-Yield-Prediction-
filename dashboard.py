@@ -520,6 +520,38 @@ PLOTLY_LAYOUT = dict(
     hoverlabel    = dict(bgcolor='#0D0500', bordercolor=P['gold'], font=dict(size=11, color='white')),
 )
 
+# High-contrast layout for Data Exploration charts
+# Deep slate background makes gridlines, labels and data points clearly visible
+EXPLORE_LAYOUT = dict(
+    plot_bgcolor  = '#0F1923',
+    paper_bgcolor = '#111D27',
+    font          = dict(family="DM Sans, sans-serif", color='rgba(255,255,255,0.88)'),
+    margin        = dict(t=70, b=50, l=10, r=10),
+    xaxis         = dict(
+        gridcolor     = 'rgba(255,255,255,0.12)',
+        linecolor     = 'rgba(255,255,255,0.3)',
+        zerolinecolor = 'rgba(255,255,255,0.3)',
+        tickfont      = dict(size=11, color='rgba(255,255,255,0.8)'),
+    ),
+    yaxis         = dict(
+        gridcolor     = 'rgba(255,255,255,0.12)',
+        linecolor     = 'rgba(255,255,255,0.3)',
+        zerolinecolor = 'rgba(255,255,255,0.3)',
+        tickfont      = dict(size=11, color='rgba(255,255,255,0.8)'),
+    ),
+    legend        = dict(
+        bgcolor     = 'rgba(255,255,255,0.05)',
+        bordercolor = 'rgba(255,255,255,0.12)',
+        borderwidth = 1,
+        font        = dict(size=11, color='rgba(255,255,255,0.85)'),
+    ),
+    hoverlabel    = dict(
+        bgcolor     = '#0A1520',
+        bordercolor = '#D4A853',
+        font        = dict(size=12, color='white'),
+    ),
+)
+
 # =============================================================================
 # PREDICTION HELPER
 # =============================================================================
@@ -844,7 +876,8 @@ with tab2:
     corr_df   = pd.DataFrame({'Feature': corr.index, 'Correlation': corr.values})
     corr_df   = corr_df.reindex(corr_df['Correlation'].abs().sort_values(ascending=True).index)
 
-    colors = [P['green'] if v > 0 else P['red'] for v in corr_df['Correlation']]
+    # Brighter colours for high-contrast slate background
+    colors = ['#52D68A' if v > 0 else '#FF6B6B' for v in corr_df['Correlation']]
 
     fig_corr = go.Figure(go.Bar(
         x=corr_df['Correlation'], y=corr_df['Feature'],
@@ -852,21 +885,28 @@ with tab2:
         marker_line_color='rgba(0,0,0,0)', marker_line_width=0,
         hovertemplate='<b>%{y}</b><br>r = %{x:.4f}<extra></extra>',
     ))
-    fig_corr.add_vline(x=0,    line_color='rgba(255,255,255,0.3)',  line_width=1)
-    fig_corr.add_vline(x=0.5,  line_color=P['green'], line_width=1.2, line_dash='dash')
-    fig_corr.add_vline(x=-0.5, line_color=P['red'],   line_width=1.2, line_dash='dash')
+    fig_corr.add_vline(x=0,    line_color='rgba(255,255,255,0.5)',  line_width=1.5)
+    fig_corr.add_vline(x=0.5,  line_color='#52D68A', line_width=1.5, line_dash='dash')
+    fig_corr.add_vline(x=-0.5, line_color='#FF6B6B', line_width=1.5, line_dash='dash')
 
-    layout_corr = {**PLOTLY_LAYOUT}
+    layout_corr = {**EXPLORE_LAYOUT}
     layout_corr['title'] = dict(
         text='Variable Relationship with Yield<br>'
-             '<sup style="color:rgba(255,255,255,0.35)">Green = higher value → better yield  ·  Red = higher value → lower yield  ·  Dashed = strong predictor ±0.5</sup>',
-        font=dict(family="Playfair Display, serif", size=14, color='white')
+             '<sup style="color:rgba(255,255,255,0.5)">Green = higher value → better yield  ·  Red = higher value → lower yield  ·  Dashed lines = strong predictor threshold ±0.5</sup>',
+        font=dict(family="Playfair Display, serif", size=15, color='white')
     )
-    layout_corr['xaxis'] = dict(**PLOTLY_LAYOUT['xaxis'],
-                                 range=[-1.05, 1.05],
-                                 title=dict(text='Relationship strength (−1 to +1)', font=dict(size=10)))
-    layout_corr['height'] = 500
-    layout_corr['margin'] = dict(t=70, b=40, l=230, r=10)
+    layout_corr['xaxis'] = dict(
+        **EXPLORE_LAYOUT['xaxis'],
+        range=[-1.05, 1.05],
+        title=dict(text='Relationship strength (−1 to +1)', font=dict(size=11, color='rgba(255,255,255,0.75)')),
+        tickvals=[-1, -0.75, -0.5, -0.25, 0, 0.25, 0.5, 0.75, 1],
+    )
+    layout_corr['yaxis'] = dict(
+        **EXPLORE_LAYOUT['yaxis'],
+        tickfont=dict(size=10, color='rgba(255,255,255,0.8)'),
+    )
+    layout_corr['height'] = 520
+    layout_corr['margin'] = dict(t=80, b=50, l=240, r=20)
     fig_corr.update_layout(**layout_corr)
     st.plotly_chart(fig_corr, use_container_width=True, config={"responsive": True})
 
@@ -889,31 +929,45 @@ with tab2:
         x_line = np.linspace(x_min, x_max, 100)
 
         fig_sc = go.Figure()
+        # Trend line
         fig_sc.add_trace(go.Scatter(
             x=x_line, y=np.poly1d(z)(x_line),
-            mode='lines', line=dict(color=P['grey'], dash='dash', width=1.5),
+            mode='lines',
+            line=dict(color='rgba(255,255,255,0.35)', dash='dash', width=1.8),
             showlegend=False,
         ))
+        # Colour each dot: gold = above avg yield, red = below avg yield
+        dot_colors = ['#F0C97A' if y >= COUNTY_MEAN else '#FF6B6B'
+                      for y in master['Yield_Tonnes_Ha']]
         fig_sc.add_trace(go.Scatter(
             x=master[selected], y=master['Yield_Tonnes_Ha'],
             mode='markers+text',
-            marker=dict(size=11, color=P['blue'],
-                        line=dict(color='#1C0A00', width=1.5)),
+            marker=dict(
+                size=13,
+                color=dot_colors,
+                line=dict(color='#0F1923', width=2),
+                symbol='circle',
+            ),
             text=master['Year'].astype(str),
             textposition='top right',
-            textfont=dict(size=9, color=P['text']),
+            textfont=dict(size=10, color='rgba(255,255,255,0.85)'),
             hovertemplate=f'<b>%{{text}}</b><br>{selected}: %{{x:.2f}}<br>Yield: %{{y:.3f}} t/ha<extra></extra>',
         ))
-        layout_sc = {**PLOTLY_LAYOUT}
+        layout_sc = {**EXPLORE_LAYOUT}
         layout_sc['title'] = dict(
-            text=f'{selected} vs Yield  ·  r = {r_val:+.3f}',
+            text=f'{selected} vs Yield  ·  r = {r_val:+.3f}<br>'
+                 f'<sup style="color:rgba(255,255,255,0.5)">Gold dots = above county average · Red dots = below average</sup>',
             font=dict(family="Playfair Display, serif", size=14, color='white')
         )
-        layout_sc['xaxis'] = dict(**PLOTLY_LAYOUT['xaxis'],
-                                   title=dict(text=selected, font=dict(size=10)))
-        layout_sc['yaxis'] = dict(**PLOTLY_LAYOUT['yaxis'],
-                                   title=dict(text='Yield (t/ha)', font=dict(size=10)))
-        layout_sc['height'] = 380
+        layout_sc['xaxis'] = dict(
+            **EXPLORE_LAYOUT['xaxis'],
+            title=dict(text=selected, font=dict(size=11, color='rgba(255,255,255,0.75)')),
+        )
+        layout_sc['yaxis'] = dict(
+            **EXPLORE_LAYOUT['yaxis'],
+            title=dict(text='Yield (t/ha)', font=dict(size=11, color='rgba(255,255,255,0.75)')),
+        )
+        layout_sc['height'] = 400
         fig_sc.update_layout(**layout_sc)
         st.plotly_chart(fig_sc, use_container_width=True, config={"responsive": True})
 
@@ -925,9 +979,13 @@ with tab2:
                      if r_val > 0 else
                      "When this variable is higher, yield tends to be lower.")
 
+        # High contrast info boxes for the slate-background explore tab
         st.markdown(f"""
-        <div class="info-box">
-        <b>r = {r_val:+.4f}</b><br>
+        <div style="background:rgba(15,25,35,0.9);border:1px solid rgba(240,201,122,0.4);
+                    border-left:4px solid #F0C97A;border-radius:0 8px 8px 0;
+                    padding:14px 16px;margin:8px 0;font-size:0.85rem;
+                    color:rgba(255,255,255,0.88);line-height:1.7;">
+        <b style="color:#F0C97A;">r = {r_val:+.4f}</b><br>
         This is a <b>{strength.lower()} {direction}</b> relationship.<br><br>
         {plain}
         </div>
@@ -935,16 +993,22 @@ with tab2:
 
         if abs(r_val) < 0.3:
             st.markdown("""
-            <div class="warn-box">
-            <b>Weak relationship</b> — not a strong standalone predictor.
-            The model combines multiple signals to improve accuracy.
+            <div style="background:rgba(15,25,35,0.9);border:1px solid rgba(255,107,107,0.35);
+                        border-left:4px solid #FF6B6B;border-radius:0 8px 8px 0;
+                        padding:14px 16px;margin:8px 0;font-size:0.85rem;
+                        color:rgba(255,255,255,0.8);line-height:1.65;">
+            <b style="color:#FF6B6B;">Weak relationship</b> — not a strong standalone predictor.
+            The model combines multiple weaker signals together to improve overall accuracy.
             </div>
             """, unsafe_allow_html=True)
         elif abs(r_val) >= 0.5:
             st.markdown("""
-            <div class="info-box">
-            <b>Strong predictor</b> — explains a meaningful share of year-to-year
-            yield variation. Likely one of the 6 model inputs.
+            <div style="background:rgba(15,25,35,0.9);border:1px solid rgba(82,214,138,0.35);
+                        border-left:4px solid #52D68A;border-radius:0 8px 8px 0;
+                        padding:14px 16px;margin:8px 0;font-size:0.85rem;
+                        color:rgba(255,255,255,0.8);line-height:1.65;">
+            <b style="color:#52D68A;">Strong predictor</b> — explains a meaningful share of
+            year-to-year yield variation. Likely one of the 6 model inputs.
             </div>
             """, unsafe_allow_html=True)
 
@@ -1333,9 +1397,56 @@ with tab4:
 st.markdown("---")
 st.markdown("""
 <div style="text-align:center;color:rgba(255,255,255,0.25);font-size:0.78rem;
-            padding:8px 0;font-family:'DM Mono',monospace;letter-spacing:0.3px;">
+            padding:12px 0 8px;font-family:'DM Mono',monospace;letter-spacing:0.3px;
+            line-height:2;">
     Maize Yield Prediction — Uasin Gishu County, Kenya &nbsp;·&nbsp;
-    KCA Tech Expo · March 2026 &nbsp;·&nbsp;
-    Data: Ministry of Agriculture · NASA POWER · CIMMYT · Purdue University · ISRIC
+    KCA Tech Expo · March 2026
+    <br>
+    <span style="font-size:0.72rem;">Data: &nbsp;
+        <a href="https://www.kilimo.go.ke" target="_blank"
+           style="color:rgba(212,168,83,0.5);text-decoration:none;
+                  border-bottom:1px solid rgba(212,168,83,0.2);
+                  padding-bottom:1px;transition:color 0.2s;"
+           onmouseover="this.style.color='rgba(212,168,83,0.9)'"
+           onmouseout="this.style.color='rgba(212,168,83,0.5)'">
+            Ministry of Agriculture, Kenya
+        </a>
+        &nbsp;·&nbsp;
+        <a href="https://power.larc.nasa.gov" target="_blank"
+           style="color:rgba(212,168,83,0.5);text-decoration:none;
+                  border-bottom:1px solid rgba(212,168,83,0.2);
+                  padding-bottom:1px;"
+           onmouseover="this.style.color='rgba(212,168,83,0.9)'"
+           onmouseout="this.style.color='rgba(212,168,83,0.5)'">
+            NASA POWER
+        </a>
+        &nbsp;·&nbsp;
+        <a href="https://www.cimmyt.org" target="_blank"
+           style="color:rgba(212,168,83,0.5);text-decoration:none;
+                  border-bottom:1px solid rgba(212,168,83,0.2);
+                  padding-bottom:1px;"
+           onmouseover="this.style.color='rgba(212,168,83,0.9)'"
+           onmouseout="this.style.color='rgba(212,168,83,0.5)'">
+            CIMMYT
+        </a>
+        &nbsp;·&nbsp;
+        <a href="https://www.purdue.edu" target="_blank"
+           style="color:rgba(212,168,83,0.5);text-decoration:none;
+                  border-bottom:1px solid rgba(212,168,83,0.2);
+                  padding-bottom:1px;"
+           onmouseover="this.style.color='rgba(212,168,83,0.9)'"
+           onmouseout="this.style.color='rgba(212,168,83,0.5)'">
+            Purdue University
+        </a>
+        &nbsp;·&nbsp;
+        <a href="https://www.isric.org" target="_blank"
+           style="color:rgba(212,168,83,0.5);text-decoration:none;
+                  border-bottom:1px solid rgba(212,168,83,0.2);
+                  padding-bottom:1px;"
+           onmouseover="this.style.color='rgba(212,168,83,0.9)'"
+           onmouseout="this.style.color='rgba(212,168,83,0.5)'">
+            ISRIC
+        </a>
+    </span>
 </div>
 """, unsafe_allow_html=True)

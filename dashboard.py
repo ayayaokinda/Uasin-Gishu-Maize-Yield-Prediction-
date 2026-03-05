@@ -526,37 +526,7 @@ PLOTLY_LAYOUT = dict(
                          font=dict(size=11, color='#E8D5B0')),
 )
 
-# High-contrast layout for Data Exploration charts
-# Deep slate background makes gridlines, labels and data points clearly visible
-EXPLORE_LAYOUT = dict(
-    plot_bgcolor  = '#0F1923',
-    paper_bgcolor = '#111D27',
-    font          = dict(family="DM Sans, sans-serif", color='rgba(255,255,255,0.88)'),
-    margin        = dict(t=70, b=50, l=10, r=10),
-    xaxis         = dict(
-        gridcolor     = 'rgba(255,255,255,0.12)',
-        linecolor     = 'rgba(255,255,255,0.3)',
-        zerolinecolor = 'rgba(255,255,255,0.3)',
-        tickfont      = dict(size=11, color='rgba(255,255,255,0.8)'),
-    ),
-    yaxis         = dict(
-        gridcolor     = 'rgba(255,255,255,0.12)',
-        linecolor     = 'rgba(255,255,255,0.3)',
-        zerolinecolor = 'rgba(255,255,255,0.3)',
-        tickfont      = dict(size=11, color='rgba(255,255,255,0.8)'),
-    ),
-    legend        = dict(
-        bgcolor     = 'rgba(255,255,255,0.05)',
-        bordercolor = 'rgba(255,255,255,0.12)',
-        borderwidth = 1,
-        font        = dict(size=11, color='rgba(255,255,255,0.85)'),
-    ),
-    hoverlabel    = dict(
-        bgcolor     = '#0A1520',
-        bordercolor = '#D4A853',
-        font        = dict(size=12, color='white'),
-    ),
-)
+
 
 # =============================================================================
 # PREDICTION HELPER
@@ -895,20 +865,20 @@ with tab2:
     fig_corr.add_vline(x=0.5,  line_color='#52D68A', line_width=1.5, line_dash='dash')
     fig_corr.add_vline(x=-0.5, line_color='#FF6B6B', line_width=1.5, line_dash='dash')
 
-    layout_corr = {**EXPLORE_LAYOUT}
+    layout_corr = {**PLOTLY_LAYOUT}
     layout_corr['title'] = dict(
         text='Variable Relationship with Yield<br>'
              '<sup style="color:rgba(255,255,255,0.5)">Green = higher value → better yield  ·  Red = higher value → lower yield  ·  Dashed lines = strong predictor threshold ±0.5</sup>',
         font=dict(family="Playfair Display, serif", size=15, color='white')
     )
     layout_corr['xaxis'] = dict(
-        **EXPLORE_LAYOUT['xaxis'],
+        **PLOTLY_LAYOUT['xaxis'],
         range=[-1.05, 1.05],
         title=dict(text='Relationship strength (−1 to +1)', font=dict(size=11, color='rgba(255,255,255,0.75)')),
         tickvals=[-1, -0.75, -0.5, -0.25, 0, 0.25, 0.5, 0.75, 1],
     )
     layout_corr['yaxis'] = dict(
-        **EXPLORE_LAYOUT['yaxis'],
+        **PLOTLY_LAYOUT['yaxis'],
         tickfont=dict(size=10, color='rgba(255,255,255,0.8)'),
     )
     layout_corr['height'] = 520
@@ -959,18 +929,18 @@ with tab2:
             textfont=dict(size=10, color='rgba(255,255,255,0.85)'),
             hovertemplate=f'<b>%{{text}}</b><br>{selected}: %{{x:.2f}}<br>Yield: %{{y:.3f}} t/ha<extra></extra>',
         ))
-        layout_sc = {**EXPLORE_LAYOUT}
+        layout_sc = {**PLOTLY_LAYOUT}
         layout_sc['title'] = dict(
             text=f'{selected} vs Yield  ·  r = {r_val:+.3f}<br>'
                  f'<sup style="color:rgba(255,255,255,0.5)">Gold dots = above county average · Red dots = below average</sup>',
             font=dict(family="Playfair Display, serif", size=14, color='white')
         )
         layout_sc['xaxis'] = dict(
-            **EXPLORE_LAYOUT['xaxis'],
+            **PLOTLY_LAYOUT['xaxis'],
             title=dict(text=selected, font=dict(size=11, color='rgba(255,255,255,0.75)')),
         )
         layout_sc['yaxis'] = dict(
-            **EXPLORE_LAYOUT['yaxis'],
+            **PLOTLY_LAYOUT['yaxis'],
             title=dict(text='Yield (t/ha)', font=dict(size=11, color='rgba(255,255,255,0.75)')),
         )
         layout_sc['height'] = 400

@@ -39,18 +39,8 @@ st.markdown("""
 
     /* ── GLOBAL ── */
     .stApp {
-        background-color: #1C0A00 !important;
+        background-color: #F5ECD7 !important;
         font-family: 'DM Sans', sans-serif !important;
-    }
-
-    /* Grain texture overlay */
-    .stApp::before {
-        content: '';
-        position: fixed;
-        inset: 0;
-        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-        pointer-events: none;
-        z-index: 0;
     }
 
     /* ── SIDEBAR ── */
@@ -87,57 +77,61 @@ st.markdown("""
     /* ── HEADINGS ── */
     h1 {
         font-family: 'Playfair Display', Georgia, serif !important;
-        color: #FFFFFF !important;
+        color: #1C0A00 !important;
         font-weight: 900 !important;
         letter-spacing: -0.5px !important;
     }
     h2 {
         font-family: 'Playfair Display', Georgia, serif !important;
-        color: #D4A853 !important;
+        color: #8B5E1A !important;
         font-weight: 700 !important;
     }
     h3 {
-        color: rgba(255,255,255,0.85) !important;
+        color: #2D1200 !important;
         font-weight: 600 !important;
+    }
+    p, li, label, .stMarkdown {
+        color: #2D1200 !important;
     }
 
     /* ── METRIC CARDS ── */
     div[data-testid="metric-container"] {
-        background: linear-gradient(135deg, #2D1200, #1C0A00) !important;
-        border: 1px solid rgba(212,168,83,0.2) !important;
+        background: linear-gradient(135deg, #FFFAF0, #FDF6E3) !important;
+        border: 1px solid rgba(139,94,26,0.25) !important;
+        border-top: 3px solid #D4A853 !important;
         border-radius: 10px !important;
         padding: 18px !important;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.4) !important;
+        box-shadow: 0 2px 12px rgba(139,94,26,0.1) !important;
     }
     div[data-testid="metric-container"] label {
-        color: rgba(255,255,255,0.5) !important;
+        color: #8B5E1A !important;
         font-size: 0.72rem !important;
         text-transform: uppercase !important;
         letter-spacing: 1.2px !important;
         font-family: 'DM Mono', monospace !important;
     }
     div[data-testid="metric-container"] [data-testid="metric-value"] {
-        color: #D4A853 !important;
+        color: #1C0A00 !important;
         font-family: 'Playfair Display', serif !important;
         font-size: 2rem !important;
         font-weight: 700 !important;
     }
     div[data-testid="metric-container"] [data-testid="metric-delta"] {
-        color: rgba(255,255,255,0.45) !important;
+        color: #8B5E1A !important;
         font-size: 0.75rem !important;
     }
 
     /* ── TABS ── */
     .stTabs [data-baseweb="tab-list"] {
-        background-color: #0D0500 !important;
+        background-color: #EDE0C4 !important;
         border-radius: 8px 8px 0 0 !important;
         padding: 4px 4px 0 !important;
         gap: 2px !important;
-        border-bottom: 1px solid rgba(212,168,83,0.15) !important;
+        border-bottom: 1px solid rgba(139,94,26,0.2) !important;
     }
     .stTabs [data-baseweb="tab"] {
         background-color: transparent !important;
-        color: rgba(255,255,255,0.45) !important;
+        color: rgba(45,18,0,0.45) !important;
         border-radius: 6px 6px 0 0 !important;
         font-weight: 600 !important;
         font-size: 0.82rem !important;
@@ -146,13 +140,13 @@ st.markdown("""
         font-family: 'DM Sans', sans-serif !important;
     }
     .stTabs [aria-selected="true"] {
-        background-color: #2D1200 !important;
-        color: #D4A853 !important;
+        background-color: #FFFAF0 !important;
+        color: #8B5E1A !important;
         border-top: 2px solid #D4A853 !important;
     }
     .stTabs [data-baseweb="tab-panel"] {
-        background-color: #1C0A00 !important;
-        border: 1px solid rgba(212,168,83,0.1) !important;
+        background-color: #FFFAF0 !important;
+        border: 1px solid rgba(139,94,26,0.15) !important;
         border-top: none !important;
         border-radius: 0 0 10px 10px !important;
         padding: 20px !important;
@@ -286,28 +280,28 @@ st.markdown("""
 
     /* Info / warning boxes */
     .info-box {
-        background: rgba(74,124,89,0.12);
+        background: rgba(74,124,89,0.08);
         border-left: 3px solid #4A7C59;
         border-radius: 0 8px 8px 0;
         padding: 12px 16px;
         margin: 8px 0;
         font-size: 0.85rem;
-        color: rgba(255,255,255,0.75);
+        color: #1C0A00;
         line-height: 1.65;
     }
-    .info-box b { color: rgba(255,255,255,0.95); }
+    .info-box b { color: #1a3a28; }
 
     .warn-box {
-        background: rgba(212,168,83,0.08);
+        background: rgba(212,168,83,0.12);
         border-left: 3px solid #D4A853;
         border-radius: 0 8px 8px 0;
         padding: 12px 16px;
         margin: 8px 0;
         font-size: 0.85rem;
-        color: rgba(255,255,255,0.7);
+        color: #2D1200;
         line-height: 1.65;
     }
-    .warn-box b { color: #D4A853; }
+    .warn-box b { color: #8B5E1A; }
 
     /* Gap callout */
     .gap-callout {
@@ -329,7 +323,7 @@ st.markdown("""
     .gap-callout p {
         font-size: 0.88rem;
         line-height: 1.7;
-        color: rgba(255,255,255,0.65);
+        color: rgba(255,255,255,0.75);
         margin: 0;
     }
     .gap-callout .gap-number {
@@ -343,16 +337,16 @@ st.markdown("""
 
     /* Onboarding banner */
     .onboard-box {
-        background: rgba(212,168,83,0.06);
-        border: 1px solid rgba(212,168,83,0.18);
+        background: #FDF6E3;
+        border: 1px solid rgba(139,94,26,0.25);
         border-radius: 10px;
         padding: 16px 20px;
         margin-bottom: 20px;
         font-size: 0.88rem;
-        color: rgba(255,255,255,0.65);
+        color: #2D1200;
         line-height: 1.7;
     }
-    .onboard-box b { color: #D4A853; }
+    .onboard-box b { color: #8B5E1A; }
 
     /* Sidebar hint text */
     .slider-hint {
@@ -510,14 +504,14 @@ P = {
 }
 
 PLOTLY_LAYOUT = dict(
-    plot_bgcolor  = P['card'],
-    paper_bgcolor = '#1C0A00',
-    font          = dict(family="DM Sans, sans-serif", color=P['text']),
+    plot_bgcolor  = '#FDF6E3',
+    paper_bgcolor = '#F5ECD7',
+    font          = dict(family="DM Sans, sans-serif", color='#2D1200'),
     margin        = dict(t=60, b=40, l=10, r=10),
-    xaxis         = dict(gridcolor=P['grid'], linecolor='rgba(255,255,255,0.08)', tickfont=dict(size=10)),
-    yaxis         = dict(gridcolor=P['grid'], linecolor='rgba(255,255,255,0.08)', tickfont=dict(size=10)),
+    xaxis         = dict(gridcolor='rgba(139,94,26,0.1)', linecolor='rgba(139,94,26,0.2)', tickfont=dict(size=10, color='#5C3A1E')),
+    yaxis         = dict(gridcolor='rgba(139,94,26,0.1)', linecolor='rgba(139,94,26,0.2)', tickfont=dict(size=10, color='#5C3A1E')),
     legend        = dict(bgcolor='rgba(0,0,0,0)', font=dict(size=10)),
-    hoverlabel    = dict(bgcolor='#0D0500', bordercolor=P['gold'], font=dict(size=11, color='white')),
+    hoverlabel    = dict(bgcolor='#2D1200', bordercolor=P['gold'], font=dict(size=11, color='white')),
 )
 
 # High-contrast layout for Data Exploration charts
@@ -1071,8 +1065,8 @@ with tab3:
                     'font': {'color': P['gold'], 'family': 'Playfair Display, serif', 'size': 28}},
         ))
         fig_gauge.update_layout(
-            height=280, paper_bgcolor='#1C0A00',
-            font=dict(color=P['text'], family='DM Sans, sans-serif'),
+            height=280, paper_bgcolor='#F5ECD7',
+            font=dict(color='#2D1200', family='DM Sans, sans-serif'),
             margin=dict(t=40, b=10, l=10, r=10),
         )
         st.plotly_chart(fig_gauge, use_container_width=True, config={"responsive": True})
@@ -1102,9 +1096,9 @@ with tab3:
         ))
         fig_donut.update_layout(
             title=dict(text=f'Rainfall Distribution — {rain_annual:.0f} mm total',
-                       font=dict(size=12, color='white', family='Playfair Display, serif')),
-            height=280, paper_bgcolor='#1C0A00',
-            font=dict(color=P['text']),
+                       font=dict(size=12, color='#1C0A00', family='Playfair Display, serif')),
+            height=280, paper_bgcolor='#F5ECD7',
+            font=dict(color='#2D1200'),
             margin=dict(t=50, b=10, l=0, r=0),
             showlegend=False,
         )
@@ -1396,57 +1390,35 @@ with tab4:
 
 st.markdown("---")
 st.markdown("""
-<div style="text-align:center;color:rgba(255,255,255,0.25);font-size:0.78rem;
-            padding:12px 0 8px;font-family:'DM Mono',monospace;letter-spacing:0.3px;
-            line-height:2;">
-    Maize Yield Prediction — Uasin Gishu County, Kenya &nbsp;·&nbsp;
-    KCA Tech Expo · March 2026
-    <br>
-    <span style="font-size:0.72rem;">Data: &nbsp;
+<div style="background:#EDE0C4;border-top:2px solid rgba(139,94,26,0.2);
+            padding:14px 20px 12px;border-radius:8px;margin-top:4px;
+            text-align:center;font-family:'DM Mono',monospace;line-height:2.2;">
+    <div style="color:#8B5E1A;font-size:0.72rem;letter-spacing:0.5px;margin-bottom:6px;">
+        Maize Yield Prediction — Uasin Gishu County, Kenya &nbsp;·&nbsp;
+        KCA Tech Expo · March 2026 &nbsp;·&nbsp; IBM SkillsBuild Data Analytics Bootcamp
+    </div>
+    <div style="font-size:0.74rem;">
+        <span style="color:#8B5E1A;">Data sources: &nbsp;</span>
         <a href="https://www.kilimo.go.ke" target="_blank"
-           style="color:rgba(212,168,83,0.5);text-decoration:none;
-                  border-bottom:1px solid rgba(212,168,83,0.2);
-                  padding-bottom:1px;transition:color 0.2s;"
-           onmouseover="this.style.color='rgba(212,168,83,0.9)'"
-           onmouseout="this.style.color='rgba(212,168,83,0.5)'">
-            Ministry of Agriculture, Kenya
-        </a>
-        &nbsp;·&nbsp;
+           style="color:#8B5E1A;text-decoration:none;border-bottom:1px dotted #D4A853;">
+            📋 Ministry of Agriculture, Kenya
+        </a> &nbsp;·&nbsp;
         <a href="https://power.larc.nasa.gov" target="_blank"
-           style="color:rgba(212,168,83,0.5);text-decoration:none;
-                  border-bottom:1px solid rgba(212,168,83,0.2);
-                  padding-bottom:1px;"
-           onmouseover="this.style.color='rgba(212,168,83,0.9)'"
-           onmouseout="this.style.color='rgba(212,168,83,0.5)'">
-            NASA POWER
-        </a>
-        &nbsp;·&nbsp;
+           style="color:#8B5E1A;text-decoration:none;border-bottom:1px dotted #D4A853;">
+            🛰 NASA POWER
+        </a> &nbsp;·&nbsp;
         <a href="https://www.cimmyt.org" target="_blank"
-           style="color:rgba(212,168,83,0.5);text-decoration:none;
-                  border-bottom:1px solid rgba(212,168,83,0.2);
-                  padding-bottom:1px;"
-           onmouseover="this.style.color='rgba(212,168,83,0.9)'"
-           onmouseout="this.style.color='rgba(212,168,83,0.5)'">
-            CIMMYT
-        </a>
-        &nbsp;·&nbsp;
+           style="color:#8B5E1A;text-decoration:none;border-bottom:1px dotted #D4A853;">
+            🌽 CIMMYT
+        </a> &nbsp;·&nbsp;
         <a href="https://www.purdue.edu" target="_blank"
-           style="color:rgba(212,168,83,0.5);text-decoration:none;
-                  border-bottom:1px solid rgba(212,168,83,0.2);
-                  padding-bottom:1px;"
-           onmouseover="this.style.color='rgba(212,168,83,0.9)'"
-           onmouseout="this.style.color='rgba(212,168,83,0.5)'">
-            Purdue University
+           style="color:#8B5E1A;text-decoration:none;border-bottom:1px dotted #D4A853;">
+            🔬 Purdue University
+        </a> &nbsp;·&nbsp;
+        <a href="https://www.isric.org/explore/soil-geographic-databases" target="_blank"
+           style="color:#8B5E1A;text-decoration:none;border-bottom:1px dotted #D4A853;">
+            🌱 ISRIC · KENSOTER v2.0
         </a>
-        &nbsp;·&nbsp;
-        <a href="https://www.isric.org" target="_blank"
-           style="color:rgba(212,168,83,0.5);text-decoration:none;
-                  border-bottom:1px solid rgba(212,168,83,0.2);
-                  padding-bottom:1px;"
-           onmouseover="this.style.color='rgba(212,168,83,0.9)'"
-           onmouseout="this.style.color='rgba(212,168,83,0.5)'">
-            ISRIC
-        </a>
-    </span>
+    </div>
 </div>
 """, unsafe_allow_html=True)
